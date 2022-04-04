@@ -185,8 +185,8 @@ console.log("18. ", checkFactors(14));
 
 // Create a function that that takes a phrase as a parameter and returns its acronym. Ex. British Broadcasting Corporation returns BBC
 function getAcronym(phrase) {
-  let result = "";
-  for (i in phrase) {
+  let result = phrase[0];
+  for (i = 0; i < phrase.length; i++) {
     if (phrase[i] === " ") {
       result += phrase[i + 1];
     }
