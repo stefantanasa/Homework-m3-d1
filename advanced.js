@@ -7,28 +7,17 @@ commonly used in the string.
     maxChar("abcccccccd") === "c"
     maxChar("apple 1231111") === "1"
 */
-function maxChar(string) {
-  let count = {};
-  let valuesArray = [];
-  let largest = 0;
-  for (i of string) {
-    if (count[i]) {
-      count[i] += 1;
-    } else {
-      count[i] = 1;
+const maxChar = (str) => {
+  let max = 0;
+  let maxChar = "";
+  str.split("").forEach((char) => {
+    if (str.split(char).length > max) {
+      max = str.split(char).length;
+      maxChar = char;
     }
-  }
-  for (i of Object.values(count)) {
-    valuesArray.push(i);
-    if (largest < i) {
-      largest = i;
-    }
-  }
-  let max = Object.keys(count)[valuesArray.indexOf(largest)];
-
-  return max;
-}
-console.log("1.", maxChar("Stefaneeaaa Ionut"));
+  });
+  return maxChar;
+};
 
 /* 2) ANAGRAMS
 
@@ -42,16 +31,8 @@ or punctuation.  Consider capital letters to be the same as lower case
   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
   anagrams('Hi there', 'Bye there') --> False
 */
-function anagramOne(a, b) {
-  result = "";
-  for (i of a) {
-    if (b.includes(i)) {
-      result += i;
-    } else return false;
-  }
-  return result;
-}
-console.log("2.", anagramOne("rail safety", "fairy tales"));
+const isAnagram = (str1, str2) =>
+  str1.split("").sort().join("") === str2.split("").sort().join("");
 
 /* 3) ANAGRAMS 2
 
@@ -61,16 +42,15 @@ Given a word and a list of possible anagrams, select the correct sublist.
 
     "listen" and a list of candidates like "enlists" "google" "inlets" "banana" the program should return a list containing "inlets".
 */
-function anagramTwo(word, list) {
-  anagrams = [];
-  list.forEach((element) => {
-    if (anagramOne(word, element)) {
-      anagrams.push(element);
+const anagrams2 = (str, arr) => {
+  const anagrams = [];
+  arr.forEach((word) => {
+    if (isAnagram(str, word)) {
+      anagrams.push(word);
     }
   });
   return anagrams;
-}
-console.log("3.", anagramTwo("listen", ["enlists", "inlets", "banana"]));
+};
 
 /* 4) PALINDROME
 
@@ -84,10 +64,10 @@ and punctuation in determining if the string is a palindrome.
     palindrome("abba") === true
     palindrome("abcdefg") === false
  */
-function isPalindrome(word) {
-  return word === word.split("").reverse().join("");
-}
-console.log("4.", isPalindrome("abba"));
+const isPolindrome = (str) =>
+  str.split(" ").join("") ===
+  str.split(" ").join("").split("").reverse().join("");
+
 /* 5) REVERSE INT
 
 Given an integer, return an integer that is the reverse
@@ -101,14 +81,8 @@ ordering of numbers.
     reverseInt(-15) === -51
     reverseInt(-90) === -9
  */
-let revInt = (int) => {
-  result = JSON.stringify(int).split("").reverse().join("");
-  if (int < 0) {
-    return "-" + result.slice(0, -1);
-  }
-  return result;
-};
-console.log("5. ", revInt(20));
+const reverseInt = (n) =>
+  parseFloat(n.toString().split("").reverse().join("")) * Math.sign(n);
 
 /* 6) STEPS
 
@@ -131,6 +105,7 @@ step has spaces on the right hand side!
         '##  '
         '### '
         '####' */
+
 const steps = (n) => {
   for (let i = 0; i < n; i++) {
     let step = " ";
@@ -144,9 +119,8 @@ const steps = (n) => {
     }
     console.log(step);
   }
-  return "done";
 };
-console.log("6. ", steps(3));
+steps(4);
 
 /* 7) REVERSE STRING
 
@@ -159,9 +133,8 @@ order of characters
     reverse('hello') === 'olleh'
     reverse('Greetings!') === '!sgniteerG'
  */
-const revString = (string) => string.split("").reverse().join("");
+const reverseStr = (str) => str.split("").reverse().join("");
 
-console.log("7.", revString("hei!"));
 /* 8) CHUNK
 
 Given an array and chunk size, divide the array into many subarrays
@@ -175,17 +148,18 @@ where each subarray is of length size
     chunk([1, 2, 3, 4, 5], 4) --> [[ 1, 2, 3, 4], [5]]
     chunk([1, 2, 3, 4, 5], 10) --> [[ 1, 2, 3, 4, 5]]
 */
-const chunks = (array, c) => {
-  count = Math.ceil(array.length / c);
-  index = c;
-  result = [];
-  for (i = 0; i < count; i++) {
-    result.push(array[(i, index)]);
-    index += count;
+const chunk = (arr, n) => {
+  const chunks = [];
+  let i = 0;
+  let length = arr.length;
+
+  while (i < length) {
+    chunks.push(arr.slice(i, (i += n)));
   }
-  return result;
+  return chunks;
 };
-console.log("8.", chunks([1, "hey", 3, 4, 5, 6, 7, 8, 9], 3));
+console.log(chunk([1, 2, 3, 4], 2));
+
 /* 9) PYRAMID
 
 Write a function that accepts a positive number N.
@@ -204,6 +178,15 @@ pyramid has spaces on both the left and right hand sides
         '  #  '
         ' ### '
         '#####' */
+const pyramid = (height) => {
+  for (let i = 0; i < height; i++) {
+    // 2n+1
+    let stars = "*".repeat(2 * i + 1);
+    let spacesBefore = " ".repeat(height - i - 1);
+    console.log(spacesBefore + stars);
+  }
+};
+pyramid(4);
 
 /* 10) SPYRAL MATRIX
 
@@ -226,3 +209,42 @@ and returns a NxN spiral matrix.
         [10,  9,  8, 7]]
 
 */
+const matrix = (n) => {
+  const results = [];
+  for (let i = 0; i < n; i++) {
+    results.push([]);
+  }
+  let counter = 1;
+  let startColumn = 0;
+  let endColumn = n - 1;
+  let startRow = 0;
+  let endRow = n - 1;
+  while (startColumn <= endColumn && startRow <= endRow) {
+    // Top row
+    for (let i = startColumn; i <= endColumn; i++) {
+      results[startRow][i] = counter;
+      counter++;
+    }
+    startRow++;
+    // Right column
+    for (let i = startRow; i <= endRow; i++) {
+      results[i][endColumn] = counter;
+      counter++;
+    }
+    endColumn--;
+    // Bottom row
+    for (let i = endColumn; i >= startColumn; i--) {
+      results[endRow][i] = counter;
+      counter++;
+    }
+    endRow--;
+    // start column
+    for (let i = endRow; i >= startRow; i--) {
+      results[i][startColumn] = counter;
+      counter++;
+    }
+    startColumn++;
+  }
+  return results;
+};
+console.log(matrix(4));

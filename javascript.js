@@ -19,9 +19,10 @@ console.log("2:", checkType(4, 5));
 
 // Create a function to remove a character at a specified position from a given string: pass the position and the string as parameters, return the new string.
 function deleteChar(string, position) {
-  return string.slice(0, position + 1);
+  return string.slice(0, position) + string.slice(position + 1);
 }
 console.log("3: ", deleteChar("SOMETHING", 5));
+
 // Create a function to find and return the largest of three given integers.
 function largestInt(a, b, c) {
   return Math.max(a, b, c);
@@ -50,7 +51,7 @@ function composeString(string, numberOfCopies) {
   }
   return newString;
 }
-console.log("6. ", composeString("Hello", 4));
+console.log("6. ", composeString("Hello", 2));
 // Create a function to display the city name if the string begins with "Los" or "New".
 //  Pass the city name as a parameter. Return false if they start with a different string.
 function displayCityName(string) {
@@ -72,6 +73,7 @@ function sumOfArray(array) {
   return sum;
 }
 console.log("8. ", sumOfArray([1, 2, 20]));
+
 // Create a function to test if an array of length 2 contains 1 OR 3. Return true is it does, false if it doesn't.
 function containsOneOrTwo(array) {
   if (array.length === 2) {
@@ -94,6 +96,7 @@ function longestString(array) {
   return longestString;
 }
 console.log("11. ", longestString(["javascript", "react", "Redux", "Python"]));
+
 // Create a function to find the types of a given angle:
 // Acute angle ⇒ between 0 and 90 degrees. Return acute.
 
@@ -112,7 +115,7 @@ function whatAngleType(angle) {
   else if (angle === 360) return "This is an Complete angle";
   else return "Something is wrong!";
 }
-console.log("12. ", whatAngleType(120));
+console.log("12. ", whatAngleType(90));
 
 // Create a function to find and return the index of the greatest element of a given array of integers that you passed as a parameter
 function findIndexOfGreatest(array) {
@@ -127,26 +130,26 @@ console.log("13. ", findIndexOfGreatest([3, 4, 5, 34, 1]));
 function largestEvenNumber(array) {
   let largest = 0;
   for (i of array) {
-    if ((i / 2) % 2 === 0 && i > largest) {
+    if (i % 2 === 0 && i > largest) {
       largest = i;
     }
   }
   return largest;
 }
-console.log("14. ", largestEvenNumber([3, 4, 5, 6, 8, 9, 20, 55, 60]));
+console.log("14. ", largestEvenNumber([3, 4, 5, 6, 8, 9, 20, 55, 80]));
 
 // Create a function to check from two given integers (passed as parameters) if one is positive and the other is negative.
 //  Return true if that's the case, return false if it's not.
 function areNegativeAndPositive(a, b) {
-  if ((a < 0) & (b > 0) || (a > 0) & (b < 0)) return true;
-  else return false;
+  return (a < 0 && b > 0) || (a > 0 && b < 0);
 }
+
 console.log("15. ", areNegativeAndPositive(1, -1));
 // Create a function to create and return a new string where the first 3 characters and in lower case and the others are in upper case.
 //  If the string's length is less than 3, convert the whole string into uppercase. Pass the original string as a parameter.
 function convertString(string) {
   let theString = "";
-  if (string.length <= 3) return string.toLowerCase();
+  if (string.length <= 3) return string.toUpperCase();
   for (i of string) {
     if (string.length > 3 && string.indexOf(i) < 3) {
       theString += i.toLowerCase();
@@ -154,8 +157,9 @@ function convertString(string) {
   }
   return theString;
 }
-console.log("16. ", convertString("abBdkfgkdfj"));
-// Create a function to calculate the sum of two integers (passed as parameters). If the sum is in the 50-80 range, return 65, otherwise, return 80.
+console.log("16. ", convertString("abcdef"));
+// Create a function to calculate the sum of two integers (passed as parameters).
+//  If the sum is in the 50-80 range, return 65, otherwise, return 80.
 function sumIntegers(a, b) {
   return a + b > 50 && a + b < 80 ? 65 : 80;
 }
